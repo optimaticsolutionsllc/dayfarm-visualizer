@@ -42,13 +42,13 @@ a { color: var(--accent); }
 .gallery-thumb { flex: 0 0 auto; width: 80px; height: 54px; object-fit: cover; border-radius: 4px; cursor: pointer; opacity: 0.5; transition: opacity 0.2s, outline 0.2s; border: 2px solid transparent; }
 .gallery-thumb.active { opacity: 1; border-color: var(--highlight); }
 .gallery-counter { position: absolute; top: 14px; right: 16px; background: rgba(0,0,0,0.55); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 13px; z-index: 2; }
-.ai-toggle { position: absolute; bottom: 48px; left: 50%; transform: translateX(-50%); z-index: 3; display: flex; background: rgba(0,0,0,0.75); border-radius: 28px; overflow: hidden; border: 2px solid rgba(255,255,255,0.3); backdrop-filter: blur(8px); box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+.ai-toggle { position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%); z-index: 3; display: flex; background: rgba(0,0,0,0.75); border-radius: 28px; overflow: hidden; border: 2px solid rgba(255,255,255,0.3); backdrop-filter: blur(8px); box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
 .ai-toggle button { background: none; border: none; color: rgba(255,255,255,0.6); padding: 10px 22px; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.25s; letter-spacing: 0.5px; }
 .ai-toggle button.active { background: var(--accent); color: #fff; border-radius: 24px; }
 .ai-toggle button[data-mode="ai"]:not(.active) { color: #A78BFA; }
 .ai-toggle.glow { animation: toggleGlow 2s ease-in-out 3; }
 @keyframes toggleGlow { 0%,100% { box-shadow: 0 4px 20px rgba(0,0,0,0.4); } 50% { box-shadow: 0 4px 30px rgba(123,97,255,0.6), 0 0 15px rgba(123,97,255,0.3); } }
-.ai-callout { position: absolute; bottom: 90px; left: 50%; transform: translateX(-50%); z-index: 4; background: linear-gradient(135deg, #7B61FF, #5B8DEF); color: #fff; padding: 8px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; white-space: nowrap; box-shadow: 0 4px 16px rgba(123,97,255,0.4); animation: calloutBounce 1.5s ease-in-out infinite; pointer-events: none; }
+.ai-callout { position: absolute; bottom: 142px; left: 50%; transform: translateX(-50%); z-index: 4; background: linear-gradient(135deg, #7B61FF, #5B8DEF); color: #fff; padding: 8px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; white-space: nowrap; box-shadow: 0 4px 16px rgba(123,97,255,0.4); animation: calloutBounce 1.5s ease-in-out infinite; pointer-events: none; }
 .ai-callout::after { content: ''; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); width: 12px; height: 12px; background: #5B8DEF; border-radius: 2px; transform: translateX(-50%) rotate(45deg); }
 @keyframes calloutBounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-6px); } }
 .ai-callout.hidden { display: none; }
