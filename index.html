@@ -3,472 +3,488 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>6518 Day Farm Court - Cosmetic Refresh Visualizer</title>
+<title>6518 Day Farm Court, Rowlett TX 75089 | $660,000</title>
 <style>
-  :root {
-    --bg: #FAF8F5;
-    --card: #FFFFFF;
-    --text: #2B2B2B;
-    --muted: #7A7A7A;
-    --accent: #3B6B4A;
-    --accent-light: #E8F0EB;
-    --border: #E5E2DD;
-    --highlight: #D4A55A;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+:root {
+  --bg: #FAF8F5;
+  --accent: #3B6B4A;
+  --highlight: #D4A55A;
+  --text: #2C2C2C;
+  --text-light: #6B6B6B;
+  --gallery-bg: #1a1a1a;
+  --card-bg: #FFFFFF;
+  --border: #E5E0DA;
+  --radius: 8px;
+  --shadow: 0 2px 12px rgba(0,0,0,0.08);
+  --max-w: 1100px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+img { max-width: 100%; display: block; }
+a { color: var(--accent); }
+.container { max-width: var(--max-w); margin: 0 auto; padding: 0 20px; }
 
-  .header {
-    background: linear-gradient(135deg, #2B2B2B 0%, #3B3B3B 100%);
-    color: white; padding: 2rem; text-align: center;
-  }
-  .header h1 { font-size: 1.8rem; font-weight: 600; margin-bottom: 0.25rem; }
-  .header .subtitle { color: #CCC; font-size: 1rem; }
-  .header .price { font-size: 2.2rem; font-weight: 700; color: var(--highlight); margin-top: 0.75rem; }
-  .header .price-context { color: #AAA; font-size: 0.85rem; }
+/* ── GALLERY ── */
+.gallery { background: var(--gallery-bg); position: relative; overflow: hidden; user-select: none; }
+.gallery-track { display: flex; transition: transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94); }
+.gallery-slide { min-width: 100%; position: relative; }
+.gallery-slide img { width: 100%; height: 520px; object-fit: cover; }
+.gallery-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 40px 20px 16px; background: linear-gradient(transparent, rgba(0,0,0,0.7)); color: #fff; font-size: 15px; text-align: center; letter-spacing: 0.3px; }
+.gallery-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.15); backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.25); color: #fff; width: 48px; height: 48px; border-radius: 50%; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; z-index: 2; }
+.gallery-btn:hover { background: rgba(255,255,255,0.3); }
+.gallery-btn.prev { left: 16px; }
+.gallery-btn.next { right: 16px; }
+.gallery-dots { position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 2; }
+.gallery-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.4); border: none; cursor: pointer; transition: background 0.2s, transform 0.2s; }
+.gallery-dot.active { background: #fff; transform: scale(1.25); }
+.gallery-thumbs { display: flex; gap: 4px; padding: 8px; background: var(--gallery-bg); overflow-x: auto; scrollbar-width: thin; scrollbar-color: #555 var(--gallery-bg); }
+.gallery-thumb { flex: 0 0 auto; width: 80px; height: 54px; object-fit: cover; border-radius: 4px; cursor: pointer; opacity: 0.5; transition: opacity 0.2s, outline 0.2s; border: 2px solid transparent; }
+.gallery-thumb.active { opacity: 1; border-color: var(--highlight); }
+.gallery-counter { position: absolute; top: 14px; right: 16px; background: rgba(0,0,0,0.55); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 13px; z-index: 2; }
 
-  .stats-bar {
-    display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;
-    background: white; padding: 1rem 2rem; border-bottom: 1px solid var(--border);
-    font-size: 0.9rem;
-  }
-  .stat { text-align: center; }
-  .stat strong { display: block; font-size: 1.1rem; }
+/* ── HEADER ── */
+.listing-header { padding: 36px 0 24px; }
+.listing-header h1 { font-size: clamp(22px, 4vw, 32px); font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.listing-header .subline { font-size: 15px; color: var(--text-light); margin-bottom: 16px; }
+.price-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 16px; margin-bottom: 8px; }
+.price-row .price { font-size: 36px; font-weight: 700; color: var(--accent); }
+.price-row .per-sqft { font-size: 15px; color: var(--text-light); }
+.concession-badge { display: inline-block; background: linear-gradient(135deg, var(--highlight), #c49240); color: #fff; padding: 6px 16px; border-radius: 20px; font-size: 14px; font-weight: 600; }
+.key-specs { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 14px; font-size: 15px; color: var(--text); }
+.key-specs span { display: flex; align-items: center; gap: 6px; }
+.key-specs .label { color: var(--text-light); font-size: 13px; }
 
-  .main { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
+/* ── STATS BAR ── */
+.stats-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; padding: 24px 0 32px; }
+.stat-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; text-align: center; box-shadow: var(--shadow); }
+.stat-card .icon { font-size: 28px; margin-bottom: 6px; }
+.stat-card .stat-title { font-weight: 700; font-size: 15px; color: var(--accent); }
+.stat-card .stat-desc { font-size: 13px; color: var(--text-light); margin-top: 2px; }
 
-  .section-title {
-    font-size: 1.3rem; font-weight: 600; margin-bottom: 1rem;
-    padding-bottom: 0.5rem; border-bottom: 2px solid var(--accent);
-    display: inline-block;
-  }
+/* ── SECTIONS ── */
+.section { padding: 32px 0; }
+.section-title { font-size: 22px; font-weight: 700; margin-bottom: 18px; padding-bottom: 10px; border-bottom: 2px solid var(--border); }
+.narrative p { margin-bottom: 16px; font-size: 16px; }
+.feature-checklist { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; margin: 24px 0; }
+.feature-checklist li { list-style: none; padding: 8px 12px; background: var(--card-bg); border-radius: var(--radius); border: 1px solid var(--border); font-size: 14px; display: flex; align-items: center; gap: 8px; }
+.feature-checklist li::before { content: "\2713"; color: var(--accent); font-weight: 700; font-size: 16px; }
+.concession-box { background: linear-gradient(135deg, #f5e6c8, #eedcb1); border: 2px solid var(--highlight); border-radius: var(--radius); padding: 24px; text-align: center; margin: 28px 0; }
+.concession-box .amount { font-size: 32px; font-weight: 700; color: var(--accent); }
+.concession-box p { font-size: 15px; color: var(--text); margin-top: 6px; }
 
-  .config-panel {
-    background: var(--card); border-radius: 12px; padding: 1.5rem;
-    border: 1px solid var(--border); margin-bottom: 2rem;
-  }
+/* ── VISUALIZER ── */
+.visualizer { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow); }
+.viz-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-bottom: 24px; }
+.viz-category h4 { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-light); margin-bottom: 10px; }
+.chip-group { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { padding: 8px 16px; border: 2px solid var(--border); border-radius: 20px; background: var(--card-bg); font-size: 13px; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+.chip:hover { border-color: var(--accent); }
+.chip.active { border-color: var(--accent); background: var(--accent); color: #fff; }
+.chip .swatch { display: inline-block; width: 14px; height: 14px; border-radius: 50%; margin-right: 6px; vertical-align: middle; border: 1px solid rgba(0,0,0,0.1); }
+.viz-preview { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
+.viz-block { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
+.viz-block-label { font-size: 12px; font-weight: 700; text-transform: uppercase; padding: 8px 12px; background: #f0ede8; letter-spacing: 0.5px; color: var(--text-light); }
+.viz-room { height: 120px; display: flex; transition: all 0.4s; }
+.viz-room > div { flex: 1; transition: background 0.4s; }
+.viz-cost-summary { background: #f9f7f4; border-radius: var(--radius); padding: 20px; border: 1px solid var(--border); }
+.cost-line { display: flex; justify-content: space-between; padding: 8px 0; font-size: 14px; border-bottom: 1px solid var(--border); }
+.cost-line:last-child { border-bottom: none; }
+.cost-line.total { font-weight: 700; font-size: 16px; border-top: 2px solid var(--text); padding-top: 12px; }
+.equity-box { background: linear-gradient(135deg, var(--accent), #2d5239); color: #fff; border-radius: var(--radius); padding: 20px; text-align: center; margin-top: 16px; }
+.equity-box .eq-number { font-size: 32px; font-weight: 700; }
+.equity-box .eq-label { font-size: 14px; opacity: 0.85; }
 
-  .option-group { margin-bottom: 1.5rem; }
-  .option-group:last-child { margin-bottom: 0; }
-  .option-group label { font-weight: 600; display: block; margin-bottom: 0.5rem; font-size: 0.95rem; }
+/* ── DETAILS GRID ── */
+.details-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.detail-item { display: flex; justify-content: space-between; padding: 10px 14px; background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); font-size: 14px; }
+.detail-item .dl { color: var(--text-light); }
+.detail-item .dv { font-weight: 600; text-align: right; }
 
-  .option-chips {
-    display: flex; gap: 0.5rem; flex-wrap: wrap;
-  }
-  .chip {
-    display: flex; align-items: center; gap: 0.5rem;
-    padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer;
-    border: 2px solid var(--border); background: white;
-    font-size: 0.85rem; transition: all 0.2s;
-  }
-  .chip:hover { border-color: var(--accent); }
-  .chip.active { border-color: var(--accent); background: var(--accent-light); font-weight: 600; }
-  .chip .swatch {
-    width: 20px; height: 20px; border-radius: 4px; border: 1px solid #DDD;
-    flex-shrink: 0;
-  }
+/* ── TAX DISCLOSURE ── */
+.tax-box { background: #FFF8EC; border: 1px solid #E8D5AD; border-radius: var(--radius); padding: 20px; margin: 24px 0; }
+.tax-box h4 { color: #8B6914; margin-bottom: 8px; }
+.tax-box p { font-size: 14px; color: #6B5A2E; }
 
-  .comparison {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
-    margin-bottom: 2rem;
-  }
-  @media (max-width: 768px) { .comparison { grid-template-columns: 1fr; } }
+/* ── FOOTER ── */
+footer { background: var(--text); color: #ccc; padding: 32px 0; text-align: center; font-size: 13px; margin-top: 40px; }
+footer a { color: var(--highlight); }
+footer .brand { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4px; }
 
-  .room-card {
-    background: var(--card); border-radius: 12px; overflow: hidden;
-    border: 1px solid var(--border);
-  }
-  .room-card .room-label {
-    padding: 0.75rem 1rem; font-weight: 600; font-size: 0.85rem;
-    text-transform: uppercase; letter-spacing: 0.05em;
-  }
-  .room-card .room-label.before { background: #F0EDED; color: var(--muted); }
-  .room-card .room-label.after { background: var(--accent-light); color: var(--accent); }
-
-  .room-visual {
-    height: 280px; display: flex; align-items: center; justify-content: center;
-    position: relative; overflow: hidden;
-  }
-  .room-visual.kitchen-before {
-    background: linear-gradient(180deg, #F5F0EB 0%, #E8E0D5 40%, #5C3A1E 40%, #4A2E15 55%, #5C3A1E 55%, #4A2E15 100%);
-  }
-
-  /* Dynamic kitchen after */
-  .room-visual.kitchen-after { transition: background 0.4s ease; }
-
-  .room-overlay {
-    position: absolute; inset: 0; display: flex; flex-direction: column;
-    justify-content: flex-end; padding: 1rem;
-  }
-  .room-overlay .detail-tag {
-    background: rgba(0,0,0,0.7); color: white; padding: 0.25rem 0.6rem;
-    border-radius: 4px; font-size: 0.75rem; display: inline-block;
-    margin-top: 0.25rem; align-self: flex-start;
-  }
-
-  /* Living room visuals */
-  .room-visual.living-before {
-    background: linear-gradient(180deg, #C4B49A 0%, #C4B49A 60%, #8B7355 60%, #8B7355 100%);
-  }
-  .room-visual.living-after { transition: background 0.4s ease; }
-
-  .cost-summary {
-    background: var(--card); border-radius: 12px; padding: 1.5rem;
-    border: 1px solid var(--border); margin-bottom: 2rem;
-  }
-  .cost-row {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 0.6rem 0; border-bottom: 1px solid var(--border);
-    font-size: 0.9rem;
-  }
-  .cost-row:last-child { border-bottom: none; }
-  .cost-row.total { font-weight: 700; font-size: 1.1rem; border-top: 2px solid var(--text); margin-top: 0.5rem; padding-top: 0.75rem; }
-  .cost-range { color: var(--accent); font-weight: 600; }
-
-  .equity-callout {
-    background: linear-gradient(135deg, var(--accent) 0%, #2D5A3A 100%);
-    color: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem;
-    text-align: center;
-  }
-  .equity-callout .big-number { font-size: 2.5rem; font-weight: 700; }
-  .equity-callout .explanation { font-size: 0.9rem; opacity: 0.9; margin-top: 0.5rem; }
-
-  .listing-specs {
-    background: var(--card); border-radius: 12px; padding: 1.5rem;
-    border: 1px solid var(--border); margin-bottom: 2rem;
-  }
-  .specs-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-  }
-  .spec-item { font-size: 0.9rem; }
-  .spec-item strong { display: block; color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
-
-  .footer {
-    text-align: center; padding: 2rem; color: var(--muted); font-size: 0.8rem;
-  }
-
-  .palette-preview {
-    display: flex; gap: 4px; margin-top: 0.5rem;
-  }
-  .palette-dot {
-    width: 12px; height: 12px; border-radius: 50%; border: 1px solid #DDD;
-  }
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .gallery-slide img { height: 300px; }
+  .gallery-btn { width: 38px; height: 38px; font-size: 18px; }
+  .gallery-thumbs { display: none; }
+  .viz-preview { grid-template-columns: 1fr; }
+  .price-row .price { font-size: 28px; }
+}
+@media (max-width: 480px) {
+  .gallery-slide img { height: 240px; }
+  .stats-bar { grid-template-columns: 1fr 1fr; }
+}
 </style>
 </head>
 <body>
 
-<div class="header">
-  <h1>6518 Day Farm Court, Rowlett TX 75089</h1>
-  <div class="subtitle">4 Bed &bull; 3 Bath &bull; 3,848 sq ft &bull; 0.43 Acres &bull; Built 2013</div>
-  <div class="price">$660,000</div>
-  <div class="price-context">$171/sqft &bull; Area average: $188-$217/sqft</div>
+<!-- GALLERY -->
+<div class="gallery" id="gallery">
+  <div class="gallery-track" id="galleryTrack"></div>
+  <button class="gallery-btn prev" id="galPrev" aria-label="Previous">&#10094;</button>
+  <button class="gallery-btn next" id="galNext" aria-label="Next">&#10095;</button>
+  <div class="gallery-counter" id="galCounter">1 / 10</div>
+  <div class="gallery-dots" id="galDots"></div>
+</div>
+<div class="gallery-thumbs" id="galThumbs"></div>
+
+<!-- HEADER -->
+<div class="container">
+  <div class="listing-header">
+    <h1>6518 Day Farm Court, Rowlett TX 75089</h1>
+    <div class="subline">Single Family Residence &middot; Garland ISD</div>
+    <div class="price-row">
+      <span class="price">$660,000</span>
+      <span class="per-sqft">$171 / sq ft</span>
+      <span class="concession-badge">$10,000 Seller Concession</span>
+    </div>
+    <div class="key-specs">
+      <span><strong>4</strong> <span class="label">Beds</span></span>
+      <span><strong>3</strong> <span class="label">Baths</span></span>
+      <span><strong>3,848</strong> <span class="label">Sq Ft</span></span>
+      <span><strong>0.43</strong> <span class="label">Acres</span></span>
+      <span><strong>2013</strong> <span class="label">Built</span></span>
+    </div>
+  </div>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-card">
+      <div class="icon">&#127968;</div>
+      <div class="stat-title">Cul-de-Sac Lot</div>
+      <div class="stat-desc">Private, low-traffic setting</div>
+    </div>
+    <div class="stat-card">
+      <div class="icon">&#127946;</div>
+      <div class="stat-title">Saltwater Pool + Spa</div>
+      <div class="stat-desc">Rock waterfall feature</div>
+    </div>
+    <div class="stat-card">
+      <div class="icon">&#10052;</div>
+      <div class="stat-title">HVAC Upgraded</div>
+      <div class="stat-desc">Efficient climate control</div>
+    </div>
+    <div class="stat-card">
+      <div class="icon">&#127795;</div>
+      <div class="stat-title">Nearly 1/2 Acre</div>
+      <div class="stat-desc">0.43 acres of space</div>
+    </div>
+  </div>
+
+  <!-- NARRATIVE -->
+  <div class="section narrative">
+    <h2 class="section-title">About This Home</h2>
+
+    <p>Tucked at the end of a quiet cul-de-sac on nearly half an acre, 6518 Day Farm Court delivers the kind of space and privacy most suburban homes only promise. There are no through-streets, no cut-through traffic, and no neighbors behind you crowding the view. Just a sprawling lot, a resort-style backyard, and 3,848 square feet of custom-built living that rewards you from the moment you walk through the door.</p>
+
+    <p>Step inside and you are greeted by a curved staircase, soaring two-story ceilings, and rich hardwood floors that flow through the main living areas. The open-concept layout connects a spacious living room anchored by a fireplace to a kitchen built for both everyday life and serious entertaining. Granite countertops wrap around a large island, stainless steel appliances line the workspace, and pendant lighting sets the tone overhead. A sun-filled breakfast nook tucks into the corner with a direct view of the pool, so mornings start with coffee and water.</p>
+
+    <p>The downstairs master suite is a true retreat. Crown molding frames the bedroom, and the en-suite bath features a soaking tub, dual vanities, and a generous walk-in closet. No stairs at the end of the day unless you want them.</p>
+
+    <p>Upstairs, a massive game room anchors the second floor, flanked by three additional bedrooms, each with ample closet space. Whether it is a media room, playroom, home gym, or all three, the flex space adapts to your household.</p>
+
+    <p>And then there is the backyard. A saltwater pool and spa with a natural rock waterfall sit center stage, surrounded by mature landscaping and open lawn on a lot that stretches to 0.43 acres. The three-car garage and upgraded HVAC round out a home that checks the boxes buyers spend months searching for.</p>
+
+    <ul class="feature-checklist">
+      <li>Cul-de-sac lot with nearly 1/2 acre of privacy</li>
+      <li>Saltwater pool + spa with rock waterfall</li>
+      <li>3,848 sq ft custom-built in 2013</li>
+      <li>Hardwood floors and two-story ceilings</li>
+      <li>Open concept kitchen with granite island</li>
+      <li>Downstairs master suite with soaking tub</li>
+      <li>Massive upstairs game room</li>
+      <li>Upgraded HVAC system</li>
+      <li>3-car garage</li>
+      <li>Stainless steel appliances + pendant lighting</li>
+    </ul>
+
+    <div class="concession-box">
+      <div class="amount">$10,000 Seller Concession</div>
+      <p>Apply toward closing costs, rate buy-down, or cosmetic upgrades at closing. Ask your agent for details.</p>
+    </div>
+  </div>
+
+  <!-- VISUALIZER -->
+  <div class="section">
+    <h2 class="section-title">Cosmetic Refresh Visualizer</h2>
+    <p style="margin-bottom:20px; color:var(--text-light); font-size:14px;">Select finish options below to estimate the cost and potential equity gain of a cosmetic refresh. All cost ranges reflect contractor-installed pricing for a home of this size.</p>
+
+    <div class="visualizer">
+      <div class="viz-row">
+        <div class="viz-category">
+          <h4>Kitchen Cabinets</h4>
+          <div class="chip-group" data-category="cabinets">
+            <button class="chip active" data-value="current" data-low="0" data-high="0" data-color="#5C3D2E"><span class="swatch" style="background:#5C3D2E"></span>Current Dark Wood</button>
+            <button class="chip" data-value="alabaster" data-low="3500" data-high="6500" data-color="#F2EDE4"><span class="swatch" style="background:#F2EDE4"></span>Alabaster White</button>
+            <button class="chip" data-value="sage" data-low="3500" data-high="6500" data-color="#A8BFA0"><span class="swatch" style="background:#A8BFA0"></span>Sage</button>
+            <button class="chip" data-value="greige" data-low="3500" data-high="6500" data-color="#B8AFA6"><span class="swatch" style="background:#B8AFA6"></span>Greige</button>
+            <button class="chip" data-value="twotone" data-low="5000" data-high="8000" data-color="#F2EDE4"><span class="swatch" style="background:linear-gradient(135deg,#F2EDE4 50%,#3B6B4A 50%)"></span>Two-Tone</button>
+          </div>
+        </div>
+        <div class="viz-category">
+          <h4>Wall Color</h4>
+          <div class="chip-group" data-category="walls">
+            <button class="chip active" data-value="agreeable-gray" data-low="8000" data-high="14000" data-color="#D5CEC5"><span class="swatch" style="background:#D5CEC5"></span>Agreeable Gray</button>
+            <button class="chip" data-value="accessible-beige" data-low="8000" data-high="14000" data-color="#D6CBBA"><span class="swatch" style="background:#D6CBBA"></span>Accessible Beige</button>
+            <button class="chip" data-value="sage" data-low="8000" data-high="14000" data-color="#C5D1BF"><span class="swatch" style="background:#C5D1BF"></span>Sage</button>
+            <button class="chip" data-value="white-dove" data-low="8000" data-high="14000" data-color="#F0EDE6"><span class="swatch" style="background:#F0EDE6"></span>White Dove</button>
+          </div>
+        </div>
+      </div>
+      <div class="viz-row">
+        <div class="viz-category">
+          <h4>Appliances</h4>
+          <div class="chip-group" data-category="appliances">
+            <button class="chip active" data-value="stainless" data-low="4500" data-high="8500" data-color="#C0C0C0"><span class="swatch" style="background:#C0C0C0"></span>Stainless Steel</button>
+            <button class="chip" data-value="matte-black" data-low="4500" data-high="8500" data-color="#2C2C2C"><span class="swatch" style="background:#2C2C2C"></span>Matte Black</button>
+            <button class="chip" data-value="white" data-low="3500" data-high="6500" data-color="#F5F5F0"><span class="swatch" style="background:#F5F5F0"></span>White</button>
+          </div>
+        </div>
+        <div class="viz-category">
+          <h4>Hardware</h4>
+          <div class="chip-group" data-category="hardware">
+            <button class="chip active" data-value="brass" data-low="1700" data-high="4600" data-color="#D4A55A"><span class="swatch" style="background:#D4A55A"></span>Brass</button>
+            <button class="chip" data-value="matte-black" data-low="1700" data-high="4600" data-color="#2C2C2C"><span class="swatch" style="background:#2C2C2C"></span>Matte Black</button>
+            <button class="chip" data-value="nickel" data-low="1500" data-high="3800" data-color="#C9C5C0"><span class="swatch" style="background:#C9C5C0"></span>Brushed Nickel</button>
+          </div>
+        </div>
+      </div>
+      <div class="viz-row">
+        <div class="viz-category">
+          <h4>Countertops</h4>
+          <div class="chip-group" data-category="counters">
+            <button class="chip active" data-value="current" data-low="0" data-high="0" data-color="#8B7355"><span class="swatch" style="background:#8B7355"></span>Keep Current Granite</button>
+            <button class="chip" data-value="white-quartz" data-low="4200" data-high="10000" data-color="#EEEAE5"><span class="swatch" style="background:#EEEAE5"></span>White Quartz</button>
+            <button class="chip" data-value="butcher" data-low="2000" data-high="5000" data-color="#B08050"><span class="swatch" style="background:#B08050"></span>Butcher Block</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview Blocks -->
+      <div class="viz-preview">
+        <div class="viz-block">
+          <div class="viz-block-label">Kitchen Preview</div>
+          <div class="viz-room" id="vizKitchen">
+            <div id="vk-wall" style="background:#D5CEC5"></div>
+            <div id="vk-cabinet" style="background:#5C3D2E"></div>
+            <div id="vk-counter" style="background:#8B7355"></div>
+            <div id="vk-appliance" style="background:#C0C0C0"></div>
+            <div id="vk-hardware" style="background:#D4A55A"></div>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-block-label">Living Room Preview</div>
+          <div class="viz-room" id="vizLiving">
+            <div id="vl-wall" style="background:#D5CEC5; flex:3"></div>
+            <div id="vl-trim" style="background:#F0EDE6; flex:1"></div>
+            <div id="vl-floor" style="background:#8B6E4E; flex:1"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cost Breakdown -->
+      <div class="viz-cost-summary" id="costSummary">
+        <div class="cost-line" id="cost-cabinets"><span>Kitchen Cabinets</span><span>$0</span></div>
+        <div class="cost-line" id="cost-walls"><span>Wall Color</span><span>$8,000 - $14,000</span></div>
+        <div class="cost-line" id="cost-appliances"><span>Appliances</span><span>$4,500 - $8,500</span></div>
+        <div class="cost-line" id="cost-hardware"><span>Hardware</span><span>$1,700 - $4,600</span></div>
+        <div class="cost-line" id="cost-counters"><span>Countertops</span><span>$0</span></div>
+        <div class="cost-line total" id="cost-total"><span>Estimated Total</span><span>$14,200 - $27,100</span></div>
+      </div>
+
+      <div class="equity-box" id="equityBox">
+        <div class="eq-label">Potential Equity at $188/sqft Reposition ($723,424)</div>
+        <div class="eq-number" id="equityNumber">$36,324 - $49,224</div>
+        <div class="eq-label" style="margin-top:4px">Repositioned Value minus Purchase Price minus Refresh Cost</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROPERTY DETAILS -->
+  <div class="section">
+    <h2 class="section-title">Property Details</h2>
+    <div class="details-grid">
+      <div class="detail-item"><span class="dl">MLS #</span><span class="dv">21159557</span></div>
+      <div class="detail-item"><span class="dl">DCAD #</span><span class="dv">440112500B0070000</span></div>
+      <div class="detail-item"><span class="dl">Year Built</span><span class="dv">2013</span></div>
+      <div class="detail-item"><span class="dl">Lot Size</span><span class="dv">0.43 Acres</span></div>
+      <div class="detail-item"><span class="dl">Construction</span><span class="dv">Brick + Stone</span></div>
+      <div class="detail-item"><span class="dl">Pool</span><span class="dv">Saltwater + Spa + Waterfall</span></div>
+      <div class="detail-item"><span class="dl">HVAC</span><span class="dv">Upgraded</span></div>
+      <div class="detail-item"><span class="dl">Garage</span><span class="dv">3-Car Attached</span></div>
+      <div class="detail-item"><span class="dl">Brokerage</span><span class="dv">Coldwell Banker Apex</span></div>
+      <div class="detail-item"><span class="dl">Listing Agent</span><span class="dv">Pamela Bell</span></div>
+    </div>
+  </div>
+
+  <!-- TAX DISCLOSURE -->
+  <div class="tax-box">
+    <h4>&#9888; Property Tax Disclosure</h4>
+    <p>The current owner holds a <strong>Disabled Veteran exemption</strong>, resulting in <strong>$0 in property taxes</strong>. This exemption <strong>does not transfer</strong> to a new owner. Based on current Dallas County tax rates and the property's assessed value, a new buyer should expect to pay an estimated <strong>~$12,900 per year</strong> in property taxes. Consult your lender or tax advisor for a precise figure.</p>
+  </div>
 </div>
 
-<div class="stats-bar">
-  <div class="stat"><strong>$53K-$95K</strong> Infrastructure already done</div>
-  <div class="stat"><strong>Saltwater Pool + Spa</strong> Converted</div>
-  <div class="stat"><strong>HVAC</strong> Fully upgraded</div>
-  <div class="stat"><strong>$658,350</strong> DCAD Market Value</div>
-</div>
-
-<div class="main">
-
-  <h2 class="section-title">Customize Your Vision</h2>
-  <p style="margin-bottom:1.5rem; color: var(--muted);">Select your preferred finishes to see how the home transforms. Cost estimates update automatically.</p>
-
-  <div class="config-panel">
-    <div class="option-group">
-      <label>Kitchen Cabinets</label>
-      <div class="option-chips" id="cabinet-options">
-        <div class="chip" data-value="current" onclick="selectOption('cabinet', this)">
-          <span class="swatch" style="background:#4A2E15"></span> Current (Dark Wood)
-        </div>
-        <div class="chip active" data-value="alabaster" onclick="selectOption('cabinet', this)">
-          <span class="swatch" style="background:#EDEAE0"></span> Alabaster White
-        </div>
-        <div class="chip" data-value="sage" onclick="selectOption('cabinet', this)">
-          <span class="swatch" style="background:#848F83"></span> Evergreen Fog (Sage)
-        </div>
-        <div class="chip" data-value="greige" onclick="selectOption('cabinet', this)">
-          <span class="swatch" style="background:#CFC4B2"></span> Agreeable Greige
-        </div>
-        <div class="chip" data-value="twotone" onclick="selectOption('cabinet', this)">
-          <span class="swatch" style="background: linear-gradient(180deg, #EDEAE0 50%, #2C3E50 50%)"></span> Two-Tone (White + Navy)
-        </div>
-      </div>
-    </div>
-
-    <div class="option-group">
-      <label>Wall Color</label>
-      <div class="option-chips" id="wall-options">
-        <div class="chip active" data-value="agreeable" onclick="selectOption('wall', this)">
-          <span class="swatch" style="background:#CFC4B2"></span> Agreeable Gray
-        </div>
-        <div class="chip" data-value="accessible" onclick="selectOption('wall', this)">
-          <span class="swatch" style="background:#D2C4AD"></span> Accessible Beige
-        </div>
-        <div class="chip" data-value="sage-wall" onclick="selectOption('wall', this)">
-          <span class="swatch" style="background:#9AADA3"></span> Comfort Sage
-        </div>
-        <div class="chip" data-value="white-dove" onclick="selectOption('wall', this)">
-          <span class="swatch" style="background:#EFEEE5"></span> White Dove
-        </div>
-      </div>
-    </div>
-
-    <div class="option-group">
-      <label>Appliances</label>
-      <div class="option-chips" id="appliance-options">
-        <div class="chip active" data-value="stainless" onclick="selectOption('appliance', this)">
-          <span class="swatch" style="background:linear-gradient(135deg, #C0C0C0, #A0A0A0)"></span> Stainless Steel
-        </div>
-        <div class="chip" data-value="matte-black" onclick="selectOption('appliance', this)">
-          <span class="swatch" style="background:#2B2B2B"></span> Matte Black
-        </div>
-        <div class="chip" data-value="white" onclick="selectOption('appliance', this)">
-          <span class="swatch" style="background:#F0F0F0; border-color:#CCC"></span> White
-        </div>
-      </div>
-    </div>
-
-    <div class="option-group">
-      <label>Hardware &amp; Fixtures</label>
-      <div class="option-chips" id="hardware-options">
-        <div class="chip active" data-value="brass" onclick="selectOption('hardware', this)">
-          <span class="swatch" style="background:#B5A065"></span> Brushed Brass
-        </div>
-        <div class="chip" data-value="matte-black-hw" onclick="selectOption('hardware', this)">
-          <span class="swatch" style="background:#333"></span> Matte Black
-        </div>
-        <div class="chip" data-value="nickel" onclick="selectOption('hardware', this)">
-          <span class="swatch" style="background:#C0C0C0"></span> Brushed Nickel
-        </div>
-      </div>
-    </div>
-
-    <div class="option-group">
-      <label>Countertops</label>
-      <div class="option-chips" id="counter-options">
-        <div class="chip" data-value="keep" onclick="selectOption('counter', this)">
-          Keep Current
-        </div>
-        <div class="chip active" data-value="white-quartz" onclick="selectOption('counter', this)">
-          <span class="swatch" style="background:#F0EDE8"></span> White Quartz (Calacatta)
-        </div>
-        <div class="chip" data-value="butcher" onclick="selectOption('counter', this)">
-          <span class="swatch" style="background:#B8925A"></span> Butcher Block (Island)
-        </div>
-      </div>
-    </div>
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="brand">OptiMatic Solutions</div>
+    <div><a href="mailto:tim@optimaticsolutions.com">tim@optimaticsolutions.com</a></div>
+    <div style="margin-top:8px">March 2026 &middot; Information deemed reliable but not guaranteed</div>
   </div>
-
-  <h2 class="section-title">Before &amp; After</h2>
-
-  <div class="comparison">
-    <div class="room-card">
-      <div class="room-label before">Current Kitchen</div>
-      <div class="room-visual kitchen-before">
-        <div class="room-overlay">
-          <span class="detail-tag">Dark dated cabinets</span>
-          <span class="detail-tag">Original hardware</span>
-        </div>
-      </div>
-    </div>
-    <div class="room-card">
-      <div class="room-label after">Your Kitchen Vision</div>
-      <div class="room-visual kitchen-after" id="kitchen-preview">
-        <div class="room-overlay">
-          <span class="detail-tag" id="tag-cabinet">Alabaster White cabinets</span>
-          <span class="detail-tag" id="tag-counter">White quartz countertops</span>
-          <span class="detail-tag" id="tag-hardware">Brushed brass hardware</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="comparison">
-    <div class="room-card">
-      <div class="room-label before">Current Living Room</div>
-      <div class="room-visual living-before">
-        <div class="room-overlay">
-          <span class="detail-tag">Dated wall color</span>
-          <span class="detail-tag">Empty / unfurnished</span>
-        </div>
-      </div>
-    </div>
-    <div class="room-card">
-      <div class="room-label after">Your Living Room Vision</div>
-      <div class="room-visual living-after" id="living-preview">
-        <div class="room-overlay">
-          <span class="detail-tag" id="tag-wall">Agreeable Gray walls</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <h2 class="section-title">Estimated Refresh Cost</h2>
-
-  <div class="cost-summary" id="cost-breakdown">
-    <!-- Populated by JS -->
-  </div>
-
-  <div class="equity-callout">
-    <div style="font-size:0.85rem; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">Estimated Equity After Refresh</div>
-    <div class="big-number" id="equity-number">$48,000+</div>
-    <div class="explanation" id="equity-explanation">
-      Based on repositioning at area average of $188/sqft ($723K) minus purchase price ($660K) and refresh cost.
-    </div>
-  </div>
-
-  <h2 class="section-title">Property Details</h2>
-
-  <div class="listing-specs">
-    <div class="specs-grid">
-      <div class="spec-item"><strong>MLS</strong> #21159557</div>
-      <div class="spec-item"><strong>DCAD Account</strong> #440112500B0070000</div>
-      <div class="spec-item"><strong>Year Built</strong> 2013</div>
-      <div class="spec-item"><strong>Lot Size</strong> 0.43 Acres (18,814 sqft)</div>
-      <div class="spec-item"><strong>Construction</strong> Frame with brick veneer</div>
-      <div class="spec-item"><strong>Pool</strong> Saltwater conversion + Spa</div>
-      <div class="spec-item"><strong>HVAC</strong> Upgraded (full system)</div>
-      <div class="spec-item"><strong>Garage</strong> 2-Car attached</div>
-      <div class="spec-item"><strong>Listed By</strong> Coldwell Banker Apex, Realtors</div>
-      <div class="spec-item"><strong>Infrastructure Value</strong> $53,000 - $95,000 already invested</div>
-    </div>
-  </div>
-
-  <div class="listing-specs">
-    <h3 style="margin-bottom:0.75rem; font-size:1rem;">Tax Disclosure</h3>
-    <p style="font-size:0.9rem; color: var(--muted);">
-      The current owner holds a Disabled Veteran exemption resulting in $0 annual property taxes.
-      <strong style="color: var(--text);">This exemption does NOT transfer to a new buyer.</strong>
-      Estimated annual taxes for new owner: ~$12,900/year (~$1,075/month escrow).
-      Taxing jurisdictions: City of Rowlett, Garland ISD, Dallas County, Dallas College, Parkland Hospital.
-    </p>
-  </div>
-</div>
-
-<div class="footer">
-  Prepared by OptiMatic Solutions &bull; tim@optimaticsolutions.com &bull; March 2026<br>
-  Cost estimates based on DFW contractor averages. Actual costs may vary. Consult a licensed contractor for firm quotes.
-</div>
+</footer>
 
 <script>
-const state = {
-  cabinet: 'alabaster',
-  wall: 'agreeable',
-  appliance: 'stainless',
-  hardware: 'brass',
-  counter: 'white-quartz'
-};
-
-const cabinetColors = {
-  current: { bg: '#4A2E15', label: 'Dark wood cabinets (current)', cost: [0, 0] },
-  alabaster: { bg: '#EDEAE0', label: 'Alabaster White cabinets', cost: [3500, 6500] },
-  sage: { bg: '#848F83', label: 'Evergreen Fog (Sage) cabinets', cost: [3500, 6500] },
-  greige: { bg: '#CFC4B2', label: 'Agreeable Greige cabinets', cost: [3500, 6500] },
-  twotone: { bg: '#EDEAE0', label: 'Two-tone cabinets (White + Navy)', cost: [5000, 8000] }
-};
-
-const wallColors = {
-  agreeable: { bg: '#CFC4B2', label: 'Agreeable Gray walls', cost: [8000, 14000] },
-  accessible: { bg: '#D2C4AD', label: 'Accessible Beige walls', cost: [8000, 14000] },
-  'sage-wall': { bg: '#9AADA3', label: 'Comfort Sage walls', cost: [8000, 14000] },
-  'white-dove': { bg: '#EFEEE5', label: 'White Dove walls', cost: [8000, 14000] }
-};
-
-const applianceCosts = {
-  stainless: [4500, 8500],
-  'matte-black': [4500, 8500],
-  white: [3500, 6500]
-};
-
-const hardwareCosts = {
-  brass: [1700, 4600],
-  'matte-black-hw': [1700, 4600],
-  nickel: [1500, 3800]
-};
-
-const counterCosts = {
-  keep: [0, 0],
-  'white-quartz': [4200, 10000],
-  butcher: [2000, 5000]
-};
-
-const counterLabels = {
-  keep: 'Current countertops',
-  'white-quartz': 'White quartz countertops',
-  butcher: 'Butcher block island'
-};
-
-const hardwareLabels = {
-  brass: 'Brushed brass hardware',
-  'matte-black-hw': 'Matte black hardware',
-  nickel: 'Brushed nickel hardware'
-};
-
-function selectOption(group, el) {
-  const parent = el.parentElement;
-  parent.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-  el.classList.add('active');
-  state[group] = el.dataset.value;
-  updatePreview();
-}
-
-function updatePreview() {
-  // Kitchen preview
-  const cab = cabinetColors[state.cabinet];
-  const wall = wallColors[state.wall];
-  const kitchenEl = document.getElementById('kitchen-preview');
-  const cabinetBg = state.cabinet === 'twotone'
-    ? `linear-gradient(180deg, ${wall.bg} 0%, ${wall.bg} 35%, #EDEAE0 35%, #EDEAE0 55%, #2C3E50 55%, #2C3E50 100%)`
-    : `linear-gradient(180deg, ${wall.bg} 0%, ${wall.bg} 35%, ${cab.bg} 35%, ${cab.bg} 100%)`;
-  kitchenEl.style.background = cabinetBg;
-
-  // Living preview
-  const livingEl = document.getElementById('living-preview');
-  livingEl.style.background = `linear-gradient(180deg, ${wall.bg} 0%, ${wall.bg} 65%, #B8A88A 65%, #B8A88A 100%)`;
-
-  // Tags
-  document.getElementById('tag-cabinet').textContent = cab.label;
-  document.getElementById('tag-counter').textContent = counterLabels[state.counter] || '';
-  document.getElementById('tag-hardware').textContent = hardwareLabels[state.hardware] || '';
-  document.getElementById('tag-wall').textContent = wall.label;
-
-  // Costs
-  const costs = [
-    { label: 'Cabinet refinishing', range: cab.cost, skip: state.cabinet === 'current' },
-    { label: 'Interior repaint (whole house)', range: wall.cost, skip: false },
-    { label: 'Appliance package', range: applianceCosts[state.appliance], skip: false },
-    { label: 'Hardware & fixtures', range: hardwareCosts[state.hardware], skip: false },
-    { label: 'Countertops', range: counterCosts[state.counter], skip: state.counter === 'keep' }
+(function() {
+  // Photo Data
+  var photos = [
+    { src: 'photos/01-exterior-front.jpg', caption: 'Front Exterior' },
+    { src: 'photos/02-entry-staircase.jpg', caption: 'Grand Entry & Curved Staircase' },
+    { src: 'photos/03-living-room.jpg', caption: 'Living Room with Fireplace' },
+    { src: 'photos/04-open-concept.jpg', caption: 'Open Concept Living to Kitchen' },
+    { src: 'photos/05-kitchen-island.jpg', caption: 'Kitchen - Granite Island' },
+    { src: 'photos/06-kitchen-galley.jpg', caption: 'Kitchen - Stainless Appliances' },
+    { src: 'photos/07-master-bedroom.jpg', caption: 'Master Suite' },
+    { src: 'photos/08-master-bath.jpg', caption: 'Master Bath - Dual Vanities' },
+    { src: 'photos/09-pool-spa.jpg', caption: 'Saltwater Pool & Spa' },
+    { src: 'photos/10-rear-pool.jpg', caption: 'Rear View - Pool & Yard' }
   ];
 
-  let totalLow = 0, totalHigh = 0;
-  let html = '';
-  costs.forEach(c => {
-    if (c.skip) return;
-    totalLow += c.range[0];
-    totalHigh += c.range[1];
-    html += `<div class="cost-row"><span>${c.label}</span><span class="cost-range">$${c.range[0].toLocaleString()} - $${c.range[1].toLocaleString()}</span></div>`;
+  var track = document.getElementById('galleryTrack');
+  var dotsContainer = document.getElementById('galDots');
+  var thumbsContainer = document.getElementById('galThumbs');
+  var counter = document.getElementById('galCounter');
+  var current = 0;
+  var autoplayTimer;
+
+  // Build slides, dots, thumbs
+  photos.forEach(function(p, i) {
+    var slide = document.createElement('div');
+    slide.className = 'gallery-slide';
+    slide.innerHTML = '<img src="' + p.src + '" alt="' + p.caption + '" loading="' + (i === 0 ? 'eager' : 'lazy') + '"><div class="gallery-caption">' + p.caption + '</div>';
+    track.appendChild(slide);
+
+    var dot = document.createElement('button');
+    dot.className = 'gallery-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Photo ' + (i + 1));
+    dot.addEventListener('click', function() { goTo(i); });
+    dotsContainer.appendChild(dot);
+
+    var thumb = document.createElement('img');
+    thumb.className = 'gallery-thumb' + (i === 0 ? ' active' : '');
+    thumb.src = p.src;
+    thumb.alt = p.caption;
+    thumb.loading = 'lazy';
+    thumb.addEventListener('click', function() { goTo(i); });
+    thumbsContainer.appendChild(thumb);
   });
-  html += `<div class="cost-row total"><span>Total Estimated Refresh</span><span class="cost-range">$${totalLow.toLocaleString()} - $${totalHigh.toLocaleString()}</span></div>`;
-  document.getElementById('cost-breakdown').innerHTML = html;
 
-  // Equity calc (based on repositioning at $188/sqft = $723K)
-  const repositionValue = 723000;
-  const purchasePrice = 660000;
-  const avgCost = (totalLow + totalHigh) / 2;
-  const equity = Math.round(repositionValue - purchasePrice - avgCost);
-  const equityFormatted = equity > 0 ? `$${equity.toLocaleString()}+` : 'Break even';
-  document.getElementById('equity-number').textContent = equityFormatted;
-  document.getElementById('equity-explanation').textContent =
-    `Based on repositioning at $188/sqft ($723K) minus purchase ($660K) and ~$${Math.round(avgCost).toLocaleString()} refresh cost.`;
-}
+  function goTo(index) {
+    current = ((index % photos.length) + photos.length) % photos.length;
+    track.style.transform = 'translateX(-' + (current * 100) + '%)';
+    counter.textContent = (current + 1) + ' / ' + photos.length;
+    var dots = document.querySelectorAll('.gallery-dot');
+    var thumbs = document.querySelectorAll('.gallery-thumb');
+    for (var i = 0; i < dots.length; i++) {
+      dots[i].classList.toggle('active', i === current);
+      thumbs[i].classList.toggle('active', i === current);
+    }
+    var activeThumb = thumbsContainer.children[current];
+    if (activeThumb) activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    resetAutoplay();
+  }
 
-// Init
-updatePreview();
+  document.getElementById('galPrev').addEventListener('click', function() { goTo(current - 1); });
+  document.getElementById('galNext').addEventListener('click', function() { goTo(current + 1); });
+
+  // Keyboard nav
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowLeft') goTo(current - 1);
+    if (e.key === 'ArrowRight') goTo(current + 1);
+  });
+
+  // Swipe support
+  var touchStartX = 0;
+  var gallery = document.getElementById('gallery');
+  gallery.addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; }, { passive: true });
+  gallery.addEventListener('touchend', function(e) {
+    var diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
+  });
+
+  // Autoplay every 5s
+  function resetAutoplay() {
+    clearInterval(autoplayTimer);
+    autoplayTimer = setInterval(function() { goTo(current + 1); }, 5000);
+  }
+  resetAutoplay();
+  gallery.addEventListener('mouseenter', function() { clearInterval(autoplayTimer); });
+  gallery.addEventListener('mouseleave', resetAutoplay);
+
+  // ── Cosmetic Refresh Visualizer ──
+  var selections = {};
+
+  document.querySelectorAll('.chip-group').forEach(function(group) {
+    var cat = group.dataset.category;
+    group.querySelectorAll('.chip').forEach(function(chip) {
+      if (chip.classList.contains('active')) {
+        selections[cat] = { value: chip.dataset.value, low: +chip.dataset.low, high: +chip.dataset.high, color: chip.dataset.color };
+      }
+      chip.addEventListener('click', function() {
+        group.querySelectorAll('.chip').forEach(function(c) { c.classList.remove('active'); });
+        chip.classList.add('active');
+        selections[cat] = { value: chip.dataset.value, low: +chip.dataset.low, high: +chip.dataset.high, color: chip.dataset.color };
+        updateVisualizer();
+      });
+    });
+  });
+
+  function fmt(n) { return '$' + n.toLocaleString(); }
+
+  function updateVisualizer() {
+    var w = selections.walls ? selections.walls.color : '#D5CEC5';
+    var c = selections.cabinets ? selections.cabinets.color : '#5C3D2E';
+    var ct = selections.counters ? selections.counters.color : '#8B7355';
+    var a = selections.appliances ? selections.appliances.color : '#C0C0C0';
+    var h = selections.hardware ? selections.hardware.color : '#D4A55A';
+
+    document.getElementById('vk-wall').style.background = w;
+    document.getElementById('vk-cabinet').style.background = c;
+    document.getElementById('vk-counter').style.background = ct;
+    document.getElementById('vk-appliance').style.background = a;
+    document.getElementById('vk-hardware').style.background = h;
+    document.getElementById('vl-wall').style.background = w;
+
+    var totalLow = 0, totalHigh = 0;
+    var categories = ['cabinets', 'walls', 'appliances', 'hardware', 'counters'];
+    categories.forEach(function(cat) {
+      var s = selections[cat];
+      if (!s) return;
+      var el = document.getElementById('cost-' + cat);
+      var range = (s.low === 0 && s.high === 0) ? '$0' : fmt(s.low) + ' - ' + fmt(s.high);
+      el.querySelector('span:last-child').textContent = range;
+      totalLow += s.low;
+      totalHigh += s.high;
+    });
+
+    document.getElementById('cost-total').querySelector('span:last-child').textContent = fmt(totalLow) + ' - ' + fmt(totalHigh);
+
+    // Equity: $188/sqft * 3848 = $723,424
+    var reposition = 723424;
+    var purchase = 660000;
+    var eqHigh = reposition - purchase - totalLow;
+    var eqLow = reposition - purchase - totalHigh;
+    document.getElementById('equityNumber').textContent = fmt(eqLow) + ' - ' + fmt(eqHigh);
+  }
+})();
 </script>
 </body>
 </html>
