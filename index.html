@@ -42,6 +42,11 @@ a { color: var(--accent); }
 .gallery-thumb { flex: 0 0 auto; width: 80px; height: 54px; object-fit: cover; border-radius: 4px; cursor: pointer; opacity: 0.5; transition: opacity 0.2s, outline 0.2s; border: 2px solid transparent; }
 .gallery-thumb.active { opacity: 1; border-color: var(--highlight); }
 .gallery-counter { position: absolute; top: 14px; right: 16px; background: rgba(0,0,0,0.55); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 13px; z-index: 2; }
+.ai-toggle { position: absolute; top: 14px; left: 16px; z-index: 3; display: flex; background: rgba(0,0,0,0.55); border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.2); }
+.ai-toggle button { background: none; border: none; color: rgba(255,255,255,0.6); padding: 5px 14px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; letter-spacing: 0.3px; }
+.ai-toggle button.active { background: rgba(255,255,255,0.2); color: #fff; }
+.ai-badge { background: linear-gradient(135deg, #7B61FF, #5B8DEF); color: #fff; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 12px; position: absolute; bottom: 52px; left: 16px; z-index: 3; letter-spacing: 0.5px; display: none; }
+.ai-badge.visible { display: block; }
 
 /* ── HEADER ── */
 .listing-header { padding: 36px 0 24px; }
@@ -220,6 +225,7 @@ footer .brand { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4
     <div class="brand">OptiMatic Solutions</div>
     <div><a href="mailto:tim@optimaticsolutions.com">tim@optimaticsolutions.com</a></div>
     <div style="margin-top:8px">March 2026 &middot; Information deemed reliable but not guaranteed</div>
+    <div style="margin-top:6px; font-size: 11px; color: #999;">AI-generated concept images created with Google Gemini. For visualization purposes only.</div>
   </div>
 </footer>
 
@@ -228,12 +234,12 @@ footer .brand { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4
   var photos = [
     { src: 'photos/01-exterior-front.jpg', caption: 'Front Exterior' },
     { src: 'photos/02-entry-staircase.jpg', caption: 'Grand Entry & Curved Staircase' },
-    { src: 'photos/03-living-room.jpg', caption: 'Living Room with Fireplace' },
-    { src: 'photos/04-open-concept.jpg', caption: 'Open Concept Living to Kitchen' },
-    { src: 'photos/05-kitchen-island.jpg', caption: 'Kitchen - Granite Island' },
-    { src: 'photos/06-kitchen-galley.jpg', caption: 'Kitchen - Stainless Appliances' },
-    { src: 'photos/07-master-bedroom.jpg', caption: 'Master Suite' },
-    { src: 'photos/08-master-bath.jpg', caption: 'Master Bath - Dual Vanities' },
+    { src: 'photos/03-living-room.jpg', caption: 'Living Room with Fireplace', ai: 'photos/03-living-room-staged.png', aiCaption: 'Living Room - Virtually Staged' },
+    { src: 'photos/04-open-concept.jpg', caption: 'Open Concept Living to Kitchen', ai: 'photos/04-open-concept-staged.png', aiCaption: 'Open Concept - Virtually Staged' },
+    { src: 'photos/05-kitchen-island.jpg', caption: 'Kitchen - Granite Island', ai: 'photos/05-kitchen-island-white.png', aiCaption: 'Kitchen Island - White Cabinet Concept' },
+    { src: 'photos/06-kitchen-galley.jpg', caption: 'Kitchen - Stainless Appliances', ai: 'photos/06-kitchen-galley-white.png', aiCaption: 'Kitchen Galley - White Cabinet Concept' },
+    { src: 'photos/07-master-bedroom.jpg', caption: 'Master Suite', ai: 'photos/07-master-bedroom-staged.png', aiCaption: 'Master Suite - Virtually Staged' },
+    { src: 'photos/08-master-bath.jpg', caption: 'Master Bath - Dual Vanities', ai: 'photos/08-master-bath-white.png', aiCaption: 'Master Bath - White Cabinet Concept' },
     { src: 'photos/09-pool-spa.jpg', caption: 'Saltwater Pool & Spa' },
     { src: 'photos/10-rear-pool.jpg', caption: 'Rear View - Pool & Yard' }
   ];
@@ -244,10 +250,37 @@ footer .brand { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4
   var counter = document.getElementById('galCounter');
   var current = 0;
 
+  var aiStates = {};
+
   photos.forEach(function(p, i) {
     var slide = document.createElement('div');
     slide.className = 'gallery-slide';
     slide.innerHTML = '<img src="' + p.src + '" alt="' + p.caption + '" loading="' + (i === 0 ? 'eager' : 'lazy') + '"><div class="gallery-caption">' + p.caption + '</div>';
+    if (p.ai) {
+      aiStates[i] = false;
+      var toggle = document.createElement('div');
+      toggle.className = 'ai-toggle';
+      toggle.innerHTML = '<button class="active" data-mode="original">Original</button><button data-mode="ai">AI Concept</button>';
+      slide.appendChild(toggle);
+      var badge = document.createElement('div');
+      badge.className = 'ai-badge';
+      badge.textContent = 'AI-Generated Concept';
+      slide.appendChild(badge);
+      // preload AI image
+      var preload = new Image(); preload.src = p.ai;
+      toggle.addEventListener('click', function(e) {
+        var btn = e.target.closest('button');
+        if (!btn) return;
+        var isAI = btn.dataset.mode === 'ai';
+        aiStates[i] = isAI;
+        var img = slide.querySelector('img');
+        var cap = slide.querySelector('.gallery-caption');
+        img.src = isAI ? p.ai : p.src;
+        cap.textContent = isAI ? p.aiCaption : p.caption;
+        badge.classList.toggle('visible', isAI);
+        toggle.querySelectorAll('button').forEach(function(b) { b.classList.toggle('active', b === btn); });
+      });
+    }
     track.appendChild(slide);
 
     var dot = document.createElement('button');
