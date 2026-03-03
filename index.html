@@ -375,7 +375,7 @@ footer .brand { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4
     var dot = document.createElement('button');
     dot.className = 'gallery-dot' + (i === 0 ? ' active' : '');
     dot.setAttribute('aria-label', 'Photo ' + (i + 1));
-    dot.addEventListener('click', function() { goTo(i); });
+    dot.addEventListener('click', function() { goTo(i, true); });
     dotsContainer.appendChild(dot);
 
     var thumb = document.createElement('img');
@@ -383,11 +383,11 @@ footer .brand { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4
     thumb.src = p.src;
     thumb.alt = p.caption;
     thumb.loading = 'lazy';
-    thumb.addEventListener('click', function() { goTo(i); });
+    thumb.addEventListener('click', function() { goTo(i, true); });
     thumbsContainer.appendChild(thumb);
   });
 
-  function goTo(index) {
+  function goTo(index, userInitiated) {
     current = ((index % photos.length) + photos.length) % photos.length;
     track.style.transform = 'translateX(-' + (current * 100) + '%)';
     counter.textContent = (current + 1) + ' / ' + photos.length;
@@ -397,18 +397,20 @@ footer .brand { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4
       dots[i].classList.toggle('active', i === current);
       thumbs[i].classList.toggle('active', i === current);
     }
-    var activeThumb = thumbsContainer.children[current];
-    if (activeThumb) activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    if (userInitiated) {
+      var activeThumb = thumbsContainer.children[current];
+      if (activeThumb) activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
     resetAutoplay();
   }
 
-  document.getElementById('galPrev').addEventListener('click', function() { goTo(current - 1); });
-  document.getElementById('galNext').addEventListener('click', function() { goTo(current + 1); });
+  document.getElementById('galPrev').addEventListener('click', function() { goTo(current - 1, true); });
+  document.getElementById('galNext').addEventListener('click', function() { goTo(current + 1, true); });
 
   // Keyboard nav
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'ArrowLeft') goTo(current - 1);
-    if (e.key === 'ArrowRight') goTo(current + 1);
+    if (e.key === 'ArrowLeft') goTo(current - 1, true);
+    if (e.key === 'ArrowRight') goTo(current + 1, true);
   });
 
   // Swipe support
@@ -417,7 +419,7 @@ footer .brand { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4
   gallery.addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; }, { passive: true });
   gallery.addEventListener('touchend', function(e) {
     var diff = touchStartX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
+    if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1), true);
   });
 
   // Autoplay every 5s
@@ -427,7 +429,17 @@ footer .brand { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4
   }
   resetAutoplay();
   gallery.addEventListener('mouseenter', function() { clearInterval(autoplayTimer); });
-  gallery.addEventListener('mouseleave', resetAutoplay);
+  gallery.addEventListener('mouseleave', function() { if (!autoplayPaused) resetAutoplay(); });
+
+  // Pause autoplay when user interacts with the visualizer
+  var autoplayPaused = false;
+  var visualizerEl = document.querySelector('.visualizer');
+  if (visualizerEl) {
+    visualizerEl.addEventListener('click', function() {
+      autoplayPaused = true;
+      clearInterval(autoplayTimer);
+    });
+  }
 
   // ── Cosmetic Refresh Visualizer ──
   var selections = {};
